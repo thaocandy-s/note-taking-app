@@ -95,7 +95,7 @@ export const EditorWorkspace: React.FC = () => {
       {/* 1. Note Header */}
       <NoteHeader note={note} />
 
-      {/* 2. Workspace Navigation Tabs (Youthful Doodle or Knowledge Graph) */}
+      {/* 2. Workspace Navigation Tabs (Youthful Doodle Sketchpad) */}
       <div className={cn(
         "flex items-center justify-between border-b border-border bg-card/20 px-4 h-11 shrink-0 select-none",
         styleMode === "knowledge" && "font-mono border-b-2"

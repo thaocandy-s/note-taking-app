@@ -4,9 +4,9 @@ import type { Note, NotesStoreState, StyleMode } from "../types/note";
 import { extractTags, getNoteTitle } from "../lib/note-utils";
 
 // Clear localStorage once to ensure first-time seeding of DEFAULT_NOTES
-if (typeof window !== "undefined" && !localStorage.getItem("notes-space-seeded")) {
+if (typeof window !== "undefined" && !localStorage.getItem("notes-space-seeded-v2")) {
   localStorage.removeItem("notes-app-storage");
-  localStorage.setItem("notes-space-seeded", "true");
+  localStorage.setItem("notes-space-seeded-v2", "true");
 }
 
 // Helper for test-safe UUID generation (jsdom/node environment safe)
@@ -39,7 +39,7 @@ const DEFAULT_NOTES: Note[] = [
         *   Nhấp tab **Sketchpad** để mở bảng vẽ tay Canvas, vẽ nguệch ngoạc hoặc phác thảo trực tiếp và tự động lưu lại!
 *   **Knowledge (Quản lý Tri thức - Obsidian Style):**
     *   Giao diện Dark academia, font chữ lập trình chuyên nghiệp.
-    *   *Tính năng đặc biệt:* Xem chi tiết tại phần Liên kết ở dưới hoặc click tab **Graph View** để xem đồ thị liên kết.
+    *   *Tính năng đặc biệt:* Hỗ trợ liên kết chéo hai chiều (Wiki Links) và xem danh sách các liên kết ngược (Backlinks) dưới chân trang.
 
 ---
 
@@ -50,10 +50,10 @@ Chỉ cần gõ hashtag bất kỳ trong ghi chú của bạn, ví dụ: #huongd
 
 ---
 
-## 🔗 3. Liên kết Wiki Link & Đồ thị liên kết
+## 🔗 3. Liên kết Wiki Link & Liên kết ngược
 NoteSpace hỗ trợ liên kết các ghi chú với nhau tương tự Obsidian hay Roam Research bằng cách bao tiêu đề note trong hai dấu ngoặc vuông.
 *   Hãy thử nhấp vào liên kết sau để mở note giới thiệu giao diện: [[Giao diện và Phong cách]]
-*   Hoặc nhấp vào liên kết này để tìm hiểu thêm về đồ thị liên kết: [[Liên kết và Đồ thị]]
+*   Hoặc nhấp vào liên kết này để tìm hiểu thêm về liên kết ngược: [[Liên kết và Liên kết ngược]]
 *   *Tính năng tạo tự động:* Nếu bạn tạo một liên kết tới một note chưa tồn tại, ví dụ: [[Ý tưởng mới]], và click vào đó, NoteSpace sẽ tự động tạo mới note đó cho bạn!
 
 Chúc bạn có những trải nghiệm ghi chú tuyệt vời cùng NoteSpace!`,
@@ -85,8 +85,8 @@ Quay lại trang chính: [[🚀 Hướng Dẫn Sử Dụng NoteSpace]]`,
   },
   {
     id: "guide-3",
-    title: "Liên kết và Đồ thị",
-    content: `# Liên kết và Đồ thị (Wiki Links & Graph View)
+    title: "Liên kết và Liên kết ngược",
+    content: `# Liên kết và Liên kết ngược (Wiki Links & Backlinks)
 
 Chào mừng bạn đến với chế độ **Knowledge Management** chuyên sâu! Đây là phong cách quản lý tri thức dạng mạng lưới (networked thought).
 
@@ -95,17 +95,10 @@ Bằng cách gõ \`[[Tiêu đề Note]]\`, bạn tạo ra một mối liên kế
 *   **Định vị nhanh:** Nhấp vào liên kết sẽ đưa bạn thẳng đến note đích.
 *   **Backlinks:** Ở cuối mỗi ghi chú, NoteSpace hiển thị danh sách tất cả các note khác đang liên kết tới note hiện tại (Backlinks). Điều này giúp bạn dễ dàng tìm lại ngữ cảnh liên quan.
 
-## 2. Đồ thị SVG Động (Graph View) #graph #physics
-Khi bạn nhấp chọn tab **Graph View** ở chế độ Knowledge:
-*   Mỗi ghi chú sẽ trở thành một nút tròn lơ lửng trên màn hình.
-*   Những note liên kết với nhau bằng \`[[]]\` sẽ nối với nhau bằng các đường liên kết trực quan.
-*   Đồ thị hoạt động dựa trên thuật toán mô phỏng lực vật lý (lực hấp dẫn trung tâm, lực đẩy giữa các nút và lực kéo lò xo của liên kết). Bạn có thể dùng chuột kéo thả các nút tròn để sắp xếp và ngắm nhìn đồ thị co giãn rất sinh động!
-*   Nhấp đúp chuột (Double click) vào bất kỳ nút nào để mở ngay note đó.
-
-Quay lại trang chính: [[🚀 Hướng Dẫn Sử Dụng NoteSpace]]`,
+Ví dụ: Note này đang được liên kết từ trang [[🚀 Hướng Dẫn Sử Dụng NoteSpace]]. Bạn có thể kiểm tra danh sách Backlinks bên dưới chân trang và click vào để quay lại!`,
     createdAt: new Date(Date.now() - 7200000).toISOString(),
     updatedAt: new Date(Date.now() - 7200000).toISOString(),
-    tags: ["lienket", "wiki", "graph", "physics"]
+    tags: ["lienket", "wiki", "backlinks"]
   }
 ];
 
