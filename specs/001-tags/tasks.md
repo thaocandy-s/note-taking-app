@@ -18,7 +18,7 @@
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Setup test configuration for tags in `package.json`
+- [x] T001 Setup test configuration for tags in `package.json`
 
 ---
 
@@ -28,9 +28,9 @@
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T002 Modify note interfaces to add customTags and new store actions in `src/types/note.ts`
-- [ ] T003 Implement tag addition, deletion, rename, and clear actions in `src/store/useNotesStore.ts`
-- [ ] T004 [P] Create store unit tests validating tag CRUD and global cascading changes in `src/store/__tests__/tags.test.ts`
+- [x] T002 Modify note interfaces to add customTags and new store actions in `src/types/note.ts`
+- [x] T003 Implement tag addition, deletion, rename, and clear actions in `src/store/useNotesStore.ts`
+- [x] T004 [P] Create store unit tests validating tag CRUD and global cascading changes in `src/store/__tests__/tags.test.ts`
 
 **Checkpoint**: Foundation ready - store state and actions are fully tested and functional.
 
@@ -44,8 +44,8 @@
 
 ### Implementation for User Story 1
 
-- [ ] T005 [P] [US1] Create a custom tag editor and popover selection component in `src/components/editor/TagEditor.tsx`
-- [ ] T006 [US1] Integrate the tag selection trigger and render custom tag badges with remove actions in `src/components/editor/NoteHeader.tsx`
+- [x] T005 [P] [US1] Create a custom tag editor and popover selection component in `src/components/editor/TagEditor.tsx`
+- [x] T006 [US1] Integrate the tag selection trigger and render custom tag badges with remove actions in `src/components/editor/NoteHeader.tsx`
 
 **Checkpoint**: User Story 1 is fully functional and testable independently.
 
@@ -59,8 +59,8 @@
 
 ### Implementation for User Story 2
 
-- [ ] T007 [US2] Update the sidebar tag filter list compilation to merge tags and customTags in `src/components/sidebar/TagFilter.tsx`
-- [ ] T008 [US2] Update the note list filtering logic to match selectedTag against both tags and customTags in `src/components/sidebar/Sidebar.tsx`
+- [x] T007 [US2] Update the sidebar tag filter list compilation to merge tags and customTags in `src/components/sidebar/TagFilter.tsx`
+- [x] T008 [US2] Update the note list filtering logic to match selectedTag against both tags and customTags in `src/components/sidebar/Sidebar.tsx`
 
 **Checkpoint**: User Stories 1 and 2 are functional and testable together.
 
@@ -74,8 +74,8 @@
 
 ### Implementation for User Story 3
 
-- [ ] T009 [P] [US3] Create a global tag manager modal component displaying all tags with rename and delete buttons in `src/components/sidebar/TagManager.tsx`
-- [ ] T010 [US3] Add a "Manage Tags" button triggering the modal in `src/components/sidebar/TagFilter.tsx`
+- [x] T009 [P] [US3] Create a global tag manager modal component displaying all tags with rename and delete buttons in `src/components/sidebar/TagManager.tsx`
+- [x] T010 [US3] Add a "Manage Tags" button triggering the modal in `src/components/sidebar/TagFilter.tsx`
 
 **Checkpoint**: All user stories are independently functional.
 
@@ -85,8 +85,8 @@
 
 **Purpose**: UI refinement, responsiveness, and final validation
 
-- [ ] T011 Polish mobile responsiveness and styling of the tag popover and manager modal in `src/components/editor/TagEditor.tsx` and `src/components/sidebar/TagManager.tsx`
-- [ ] T012 Run automated tests and quickstart verification in `specs/001-tags/quickstart.md`
+- [x] T011 Polish mobile responsiveness and styling of the tag popover and manager modal in `src/components/editor/TagEditor.tsx` and `src/components/sidebar/TagManager.tsx`
+- [x] T012 Run automated tests and quickstart verification in `specs/001-tags/quickstart.md`
 
 ---
 
