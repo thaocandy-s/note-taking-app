@@ -25,3 +25,7 @@ dist-ssr
 
 #MyDoc
 MyDoc
+
+# AI Agent Local Folders
+.gemini/
+.copilot/

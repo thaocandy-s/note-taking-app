@@ -7,6 +7,7 @@ export interface Note {
   createdAt: string;           // ISO DateTime String
   updatedAt: string;           // ISO DateTime String
   tags: string[];              // Auto-extracted hashtag tokens
+  customTags?: string[];       // Manually assigned tags
 
   // Style-specific metadata
   pageColor?: string;          // Youthful Mode: customizable background color
@@ -38,4 +39,10 @@ export interface NotesStoreState {
   addSticker: (noteId: string, sticker: string) => void;
   removeSticker: (noteId: string, stickerIndex: number) => void;
   updateDoodle: (noteId: string, doodleData: string) => void;
+
+  // Custom Tag Actions
+  addCustomTag: (noteId: string, tag: string) => void;
+  removeCustomTag: (noteId: string, tag: string) => void;
+  renameTagGlobally: (oldTag: string, newTag: string) => void;
+  deleteTagGlobally: (tag: string) => void;
 }

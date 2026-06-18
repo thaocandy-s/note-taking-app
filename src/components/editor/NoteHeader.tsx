@@ -5,13 +5,14 @@ import { Smile, Calendar, Palette, XCircle, Tag } from "lucide-react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { cn } from "../../lib/utils";
+import { TagEditor } from "./TagEditor";
 
 interface NoteHeaderProps {
   note: Note;
 }
 
 export const NoteHeader: React.FC<NoteHeaderProps> = ({ note }) => {
-  const { updateNote, addSticker, removeSticker, styleMode } = useNotesStore();
+  const { updateNote, addSticker, removeSticker, styleMode, removeCustomTag } = useNotesStore();
   const [showColorPicker, setShowColorPicker] = useState(false);
   const [showStickerPicker, setShowStickerPicker] = useState(false);
   
@@ -165,17 +166,60 @@ export const NoteHeader: React.FC<NoteHeaderProps> = ({ note }) => {
       </div>
 
       {/* Metadata Row */}
-      <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-[10px] text-muted-foreground font-semibold uppercase tracking-wider">
-        <span className="flex items-center gap-1 select-none">
+      <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-[10px] text-muted-foreground font-semibold uppercase tracking-wider mt-1 border-t border-border/30 pt-2 select-none">
+        <span className="flex items-center gap-1 py-0.5">
           <Calendar className="size-3.5" />
           Created: {new Date(note.createdAt).toLocaleDateString()}
         </span>
-        {note.tags && note.tags.length > 0 && (
-          <span className="flex items-center gap-1 select-none">
-            <Tag className="size-3.5" />
-            Tags: {note.tags.map(t => `#${t}`).join(", ")}
-          </span>
-        )}
+
+        <span className="flex items-center gap-1 py-0.5">
+          <Tag className="size-3.5" />
+          Tags:
+        </span>
+
+        <div className="flex flex-wrap items-center gap-1.5">
+          {/* 1. Raw Markdown Hashtags */}
+          {note.tags && note.tags.length > 0 && note.tags.map(t => (
+            <span
+              key={`hash-${t}`}
+              className={cn(
+                "inline-flex items-center px-1.5 py-0.5 border border-border bg-secondary/50 text-muted-foreground hover:text-foreground transition-all text-[8px] font-black select-none",
+                styleMode === "youthful" && "rounded-full",
+                styleMode === "knowledge" && "font-mono rounded-none border-dashed",
+                styleMode === "minimalist" && "rounded-md"
+              )}
+              title="Hashtag (edit note content to edit)"
+            >
+              #{t}
+            </span>
+          ))}
+
+          {/* 2. Custom UI Managed Tags */}
+          {note.customTags && note.customTags.length > 0 && note.customTags.map(t => (
+            <span
+              key={`custom-${t}`}
+              className={cn(
+                "inline-flex items-center gap-1 px-1.5 py-0.5 border border-primary/20 text-primary bg-primary/5 hover:bg-primary/10 transition-all text-[8px] font-black select-none",
+                styleMode === "youthful" && "rounded-full",
+                styleMode === "knowledge" && "font-mono rounded-none",
+                styleMode === "minimalist" && "rounded-md"
+              )}
+            >
+              {t}
+              <button
+                onClick={() => removeCustomTag(note.id, t)}
+                className="text-primary hover:text-destructive cursor-pointer rounded-full p-0.5 hover:bg-primary/10 transition-all"
+                title={`Remove ${t}`}
+                aria-label={`Remove ${t}`}
+              >
+                <XCircle className="size-2.5" />
+              </button>
+            </span>
+          ))}
+
+          {/* 3. Popover tag adding widget */}
+          <TagEditor note={note} />
+        </div>
       </div>
     </div>
   );

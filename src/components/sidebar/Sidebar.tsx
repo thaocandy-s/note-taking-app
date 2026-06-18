@@ -15,8 +15,12 @@ export const Sidebar: React.FC = () => {
   const filteredNotes = React.useMemo(() => {
     return notes.filter(note => {
       // Filter by tag if selected
-      if (selectedTag && !note.tags?.includes(selectedTag)) {
-        return false;
+      if (selectedTag) {
+        const hasHash = note.tags?.includes(selectedTag);
+        const hasCustom = note.customTags?.includes(selectedTag);
+        if (!hasHash && !hasCustom) {
+          return false;
+        }
       }
       
       // Filter by search query if set
@@ -54,7 +58,7 @@ export const Sidebar: React.FC = () => {
       <TagFilter />
 
       {/* Note List Scroll Area */}
-      <ScrollArea className="flex-1">
+      <ScrollArea className="flex-1 min-h-0">
         <div className="flex flex-col gap-2 px-4 py-4">
           {filteredNotes.length > 0 ? (
             filteredNotes.map(note => (

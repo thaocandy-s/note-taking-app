@@ -234,6 +234,104 @@ export const useNotesStore = create<NotesStoreState>()(
             return note;
           })
         }));
+      },
+
+      addCustomTag: (noteId: string, tag: string) => {
+        const cleanTag = tag.trim();
+        if (!cleanTag || cleanTag.length > 20) return;
+
+        set(state => ({
+          notes: state.notes.map(note => {
+            if (note.id === noteId) {
+              const customTags = note.customTags || [];
+              const lowerTag = cleanTag.toLowerCase();
+
+              const hasCustom = customTags.some(t => t.toLowerCase() === lowerTag);
+              const hasHash = note.tags?.some(t => t.toLowerCase() === lowerTag);
+
+              if (hasCustom || hasHash) return note;
+
+              return {
+                ...note,
+                customTags: [...customTags, cleanTag],
+                updatedAt: new Date().toISOString()
+              };
+            }
+            return note;
+          })
+        }));
+      },
+
+      removeCustomTag: (noteId: string, tag: string) => {
+        const lowerTag = tag.trim().toLowerCase();
+        set(state => ({
+          notes: state.notes.map(note => {
+            if (note.id === noteId) {
+              const customTags = note.customTags || [];
+              return {
+                ...note,
+                customTags: customTags.filter(t => t.toLowerCase() !== lowerTag),
+                updatedAt: new Date().toISOString()
+              };
+            }
+            return note;
+          })
+        }));
+      },
+
+      renameTagGlobally: (oldTag: string, newTag: string) => {
+        const cleanOld = oldTag.trim().toLowerCase();
+        const cleanNew = newTag.trim();
+        if (!cleanNew || cleanNew.length > 20) return;
+
+        set(state => {
+          const updatedNotes = state.notes.map(note => {
+            const customTags = note.customTags || [];
+            if (customTags.some(t => t.toLowerCase() === cleanOld)) {
+              const hasNew = customTags.some(t => t.toLowerCase() === cleanNew.toLowerCase()) ||
+                             note.tags?.some(t => t.toLowerCase() === cleanNew.toLowerCase());
+              const nextCustomTags = customTags.filter(t => t.toLowerCase() !== cleanOld);
+              if (!hasNew) {
+                nextCustomTags.push(cleanNew);
+              }
+              return {
+                ...note,
+                customTags: nextCustomTags,
+                updatedAt: new Date().toISOString()
+              };
+            }
+            return note;
+          });
+
+          const isFilteringOld = state.selectedTag?.toLowerCase() === cleanOld;
+          return {
+            notes: updatedNotes,
+            selectedTag: isFilteringOld ? cleanNew : state.selectedTag
+          };
+        });
+      },
+
+      deleteTagGlobally: (tag: string) => {
+        const lowerTag = tag.trim().toLowerCase();
+        set(state => {
+          const updatedNotes = state.notes.map(note => {
+            const customTags = note.customTags || [];
+            if (customTags.some(t => t.toLowerCase() === lowerTag)) {
+              return {
+                ...note,
+                customTags: customTags.filter(t => t.toLowerCase() !== lowerTag),
+                updatedAt: new Date().toISOString()
+              };
+            }
+            return note;
+          });
+
+          const isFilteringDeleted = state.selectedTag?.toLowerCase() === lowerTag;
+          return {
+            notes: updatedNotes,
+            selectedTag: isFilteringDeleted ? null : state.selectedTag
+          };
+        });
       }
     }),
     {
